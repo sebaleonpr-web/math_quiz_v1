@@ -22,14 +22,15 @@ class QuizOptionButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         elevation: 2,
         backgroundColor: AppColors.primary,
+        // ignore: deprecated_member_use
         disabledBackgroundColor: AppColors.primary.withOpacity(0.6),
         shape: const StadiumBorder(),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 0),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.arrow_right_alt, size: 18, color: Colors.white),
+          const Icon(Icons.arrow_right_alt, size: 0, color: Colors.white),
           const SizedBox(width: 6),
           Text(label, style: TextStyles.button),
         ],

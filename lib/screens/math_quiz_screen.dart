@@ -53,10 +53,22 @@ class _MathQuizScreenState extends State<MathQuizScreen> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         centerTitle: true,
-        elevation: 2,
+        elevation: 4, 
+        shadowColor: Colors.black38, 
         backgroundColor: AppColors.appBar,
         foregroundColor: AppColors.white,
-        title: const Text('Juego de Sumas', style: TextStyles.appBarTitle),
+        title: Text(
+          'Juego de Sumas',
+          style: TextStyles.appBarTitle.copyWith(
+            shadows: const [
+              Shadow(
+                offset: Offset(1, 1),
+                blurRadius: 3,
+                color: Colors.black26,
+              ),
+            ],
+          ),
+        ),
       ),
       body: SafeArea(
         child: Center(
@@ -65,23 +77,48 @@ class _MathQuizScreenState extends State<MathQuizScreen> {
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 420),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.max,
                 children: [
-                  const SizedBox(height: 12),
-                  const Text('¿Cuánto es…?', style: TextStyles.heading),
-                  const SizedBox(height: 6),
-                  Text('$num1 + $num2', style: TextStyles.bigOp),
-                  const SizedBox(height: 24),
-
+                  const Spacer(),
+                  Text(
+                    '¿Cuánto es…?',
+                    style: TextStyles.appBarTitle.copyWith(
+                      fontSize: 38,
+                      shadows: const [
+                        Shadow(
+                          offset: Offset(2, 2),
+                          blurRadius: 4,
+                          color: Colors.black26,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '$num1 + $num2',
+                    style: TextStyles.appBarTitle.copyWith(
+                      fontSize: 52,
+                      color: AppColors.primary,
+                      shadows: const [
+                        Shadow(
+                          offset: Offset(2, 2),
+                          blurRadius: 4,
+                          color: Colors.black26,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 50),
                   GridView.builder(
                     shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: opciones.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 24,
-                      childAspectRatio: 2.2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 25,
+                      childAspectRatio: 2.8,
                     ),
                     itemBuilder: (_, i) {
                       final value = opciones[i];
@@ -92,51 +129,68 @@ class _MathQuizScreenState extends State<MathQuizScreen> {
                       );
                     },
                   ),
-
                   const SizedBox(height: 20),
-
-                  if (respondido)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          acierto ? Icons.check_circle : Icons.cancel,
-                          color: acierto ? AppColors.success : AppColors.error,
-                          size: 20,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          acierto ? 'Correcto' : 'Incorrecto',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color:
-                                acierto ? AppColors.success : AppColors.error,
-                            fontWeight: FontWeight.w600,
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    child: respondido
+                        ? Row(
+                            key: const ValueKey(1),
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                acierto ? Icons.check_circle : Icons.cancel,
+                                color: acierto
+                                    ? AppColors.success
+                                    : AppColors.error,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                acierto ? 'Correcto' : 'Incorrecto',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: acierto
+                                      ? AppColors.success
+                                      : AppColors.error,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          )
+                        : const SizedBox(
+                            key: ValueKey(0),
+                            height: 26,
                           ),
-                        ),
-                      ],
-                    ),
-
-                  const SizedBox(height: 16),
-
-                  if (respondido)
-                    SizedBox(
-                      height: 48,
-                      child: ElevatedButton(
-                        onPressed: _nuevaPregunta,
-                        style: ElevatedButton.styleFrom(
-                          elevation: 2,
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: AppColors.white,
-                          shape: const StadiumBorder(),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 10,
+                  ),
+                  const SizedBox(height: 25),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    child: respondido
+                        ? SizedBox(
+                            key: const ValueKey(1),
+                            height: 55,
+                            child: ElevatedButton(
+                              onPressed: _nuevaPregunta,
+                              style: ElevatedButton.styleFrom(
+                                elevation: 2,
+                                backgroundColor: AppColors.primary,
+                                foregroundColor: AppColors.white,
+                                shape: const StadiumBorder(),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 10,
+                                ),
+                              ),
+                              child: const Text('Siguiente',
+                                  style: TextStyles.button),
+                            ),
+                          )
+                        : const SizedBox(
+                            key: ValueKey(0),
+                            height: 55,
                           ),
-                        ),
-                        child: const Text('Siguiente', style: TextStyles.button),
-                      ),
-                    ),
+                  ),
+                  const Spacer(),
                 ],
               ),
             ),

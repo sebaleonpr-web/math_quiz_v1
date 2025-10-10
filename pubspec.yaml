@@ -1,5 +1,5 @@
 name: math_quiz_v1
-description: "A new Flutter project."
+description: "Matematicas."
 publish_to: 'none'
 version: 0.1.0
 
@@ -14,6 +14,16 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/icon/
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: assets/icon/icon.png
+  adaptive_icon_background: "#fff7d1"
+  adaptive_icon_foreground: assets/icon/icon.png
